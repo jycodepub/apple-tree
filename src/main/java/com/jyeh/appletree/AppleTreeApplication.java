@@ -18,7 +18,7 @@ public class AppleTreeApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        //integerTree();
+        integerTree();
         appleTree();
     }
 
@@ -45,10 +45,10 @@ public class AppleTreeApplication implements CommandLineRunner {
     private void appleTree() {
         AppleComparator comparator = (t, o) -> (int) Math.floor(t.getPrice() - o.getPrice());
         Apple[] apples = new Apple[] {
-                Apple.builder().type("Fuji").price(4.99).weight(1.).comparator(comparator).build(),
-                Apple.builder().type("PinkLady").price(5.99).weight(1.).comparator(comparator).build(),
-                Apple.builder().type("GoldenCrispy").price(3.99).weight(1.).comparator(comparator).build(),
-                Apple.builder().type("RedDelicious").price(6.99).weight(1.).comparator(comparator).build()
+                new Apple("Fuji",4.99,1.,comparator),
+                new Apple("PinkLady",5.99,1.,comparator),
+                new Apple("GoldenCrispy",3.99,1.,comparator),
+                new Apple("RedDelicious",6.99,1.,comparator)
         };
 
         BinarySearchTree<Apple> tree = new BinarySearchTree<>();
@@ -57,7 +57,7 @@ public class AppleTreeApplication implements CommandLineRunner {
             tree.addNode(new TreeNode<>(apples[i]));
         }
 
-        tree.traverse(tree.getRoot(), System.out::println);
+        tree.traverse(tree.getRoot(), t -> System.out.println(t.getValue()));
 
         DoubleAdder sum = new DoubleAdder();
         tree.traverse(tree.getRoot(), node -> sum.add(node.getValue().getPrice()));
